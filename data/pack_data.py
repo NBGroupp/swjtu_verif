@@ -3,6 +3,7 @@ import numpy as np
 from PIL import Image
 from pre_operation import pre_operation
 
+
 def cut_captcha(im):
     """ 传入经过预处理的Image对象，分割为四张字母.
         分割成功返回分割位置列表：
@@ -92,13 +93,12 @@ def test_accuracy(pic_dir_pos):
 def pack_data(raw_captcha_dir, pack_num):
     """ 传入含有原始验证码图片的文件夹位置，打包为训练神经网络输入形式。
         输入形式是一个列表，基本元素是元组(x, y)。元组的第一个值x是一
-        个270 × 1的 numpy.ndarray 对象，第二个值是一个10×1的 numpy.ndarray
+        个324 × 1的 numpy.ndarray 对象，第二个值是一个10×1的 numpy.ndarray
         对象，含有x的正确值。
         [((单张字母图片像素值), (24维正确结果)), (...), ....] """
     let_list = [x for x in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ']
     data = []
     suc_packed_data = 0
-    blank_back = Image.open('blank.jpg').convert('L')
     for root, dirs, files in os.walk(raw_captcha_dir):
         for one_pic in files:
             pre_im = pre_operation(os.path.join(root, one_pic))
@@ -109,15 +109,15 @@ def pack_data(raw_captcha_dir, pack_num):
             cor_letters = os.path.splitext(one_pic)[0]
             for i, one_let_box in enumerate(four_let_boxes):
                 # 截取字母贴到白色背景上
-                let_im = blank_back.copy()
-                let_im.paste(pre_im.crop(one_let_box), (0 ,0))
                 # 像素值列表
-                pixels = [[let_im.getpixel((i, j))] 
-                        for i in range(0, let_im.size[0]) 
-                        for j in range(0, let_im.size[1])]
-                # 转化为numpy数组           
-                pixels = np.reshape(pixels, (15*18, 1))  # 像素numpy矩阵
-                cor_let = np.zeros((26*1), dtype=int)
+                pixels = np.zeros((18*18, 1), dtype=float)
+                pos = 0
+                for x in range(one_let_box[0], one_let_box[2] + 1):
+                    for y in range(one_let_box[1], one_let_box[3] + 1):
+                        pixels[pos] = pre_im.getpixel((x, y))
+                        pos += 1
+                # 正确结果列表
+                cor_let = np.zeros((26, 1), dtype=float)
                 cor_let[let_list.index(cor_letters[i])] = 1  # 结果numpy矩阵
                 data.append((pixels, cor_let))
                 suc_packed_data += 1
@@ -128,9 +128,6 @@ if __name__ == '__main__':
     import pickle
     data = pack_data('test_pics', 200000)
     
-    f = open('train_data.pkl', 'wb')
-    pickle.dump(data[0:150000], f)  # 150k训练数据
-    f.close()
-    f = open('test_data.pkl', 'wb')
-    pickle.dump(data[150000:200000], f)  # 50k验证数据
+    f = open('data.pkl', 'wb')
+    pickle.dump([data[0:150000], data[150000:200000]], f)  # 150k训练数据,50k验证数据
     f.close()
