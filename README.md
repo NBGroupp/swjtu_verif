@@ -12,7 +12,7 @@
 2. 利用Google开源的pytesser3库将验证码识别为对应结果以备训练（==讲道理如果是为了做验证码识别直接用Google的库就好了，但是我们不是为了训练网络而训练网络么==）
 3. 图片打包
 
-###\BP
+### \BP
 
 BP网络参考了mnielsen](https://github.com/mnielsen)的[教程](http://neuralnetworksanddeeplearning.com/)实现，在此向mnielsen表示感谢！  
 
