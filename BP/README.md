@@ -1,13 +1,13 @@
 # swjtu_verif
-##教务验证码识别
+## 教务验证码识别
 
-###数据预处理
+### 数据预处理
 
 preprocess.m是初期的matlab函数文件，当时尚未做成自动化的脚本
 
 preprocess.py是python脚本文件，可以直接在命令行python3 preprocess.py，运行前需要先将data文件夹下的captcha.7z中的图片文件解压至./pic文件夹下，生成的训练数据存入./picchar文件夹下。
 
-###训练网络
+### 训练网络
 
 在network.py中修改参数后直接在命令行python3 network.py即可，程序默认是从打包的data.pkl中获取数据，data.pkl见data文件夹
 
@@ -21,7 +21,7 @@ preprocess.py是python脚本文件，可以直接在命令行python3 preprocess.
 http://www.cnblogs.com/beer/p/5672678.html
 相同的方法进行处理
 
-####分割
+#### 分割
 
 分割大概遇到几类问题：
 
@@ -49,6 +49,6 @@ i自front向右移动，若遇到pixel=0且1<i-front<17，则back=i;
 
 分割后的图片均放在背景为20*20的白色背景上。放置位置在左上方。
 
-####训练集和测试集的制作
+#### 训练集和测试集的制作
 
 人工看有点烦。。。就用Google的pytessor把爬下来的验证码重命名，成功分割的图片就以图片名字的四个字母命名。放到list中，随机抽取10000作为测试集，剩余作为训练集。
