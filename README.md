@@ -14,7 +14,7 @@
 
 ### \BP
 
-BP网络参考了mnielsen](https://github.com/mnielsen)的[教程](http://neuralnetworksanddeeplearning.com/)实现，在此向mnielsen表示感谢！  
+BP网络参考了[mnielsen](https://github.com/mnielsen)的[教程](http://neuralnetworksanddeeplearning.com/)实现，在此向mnielsen表示感谢！ 
 
 使用BP神经网络搭建的验证码识别网络，训练识别26个字母的网络，识别一套验证码的大致步骤为：
 
