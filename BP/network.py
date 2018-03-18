@@ -92,7 +92,7 @@ def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))
 
-f = gzip.open('./data/data.pkl.gz')
+f = gzip.open('../data/data.pkl.gz')
 training_data, test_data = pickle.load(f)
 f.close()
 
