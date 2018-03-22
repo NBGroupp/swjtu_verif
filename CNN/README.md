@@ -45,5 +45,5 @@ PyYAML 3.12
    cd ./SAMPLE_TEST             
    python ../tools/ImgResize.py          
    （python ../tools/GetImage.py 20）或者用验证码生成器生成多组测试图片           
-   python ../evaluate.py ../vegalearning_model.json ../vegalearning_weights.model              
+   python ../evaluate.py ../vegalearning_model.json ../vegalearning_weights.model                
    ​              
